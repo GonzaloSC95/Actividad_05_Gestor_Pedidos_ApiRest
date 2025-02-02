@@ -1,0 +1,268 @@
+{
+	"info": {
+		"_postman_id": "bf4a24a5-f3a7-4aee-b382-3c2f60bdb6ae",
+		"name": "GSC_Actividad_5",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18427108"
+	},
+	"item": [
+		{
+			"name": "Comercial",
+			"item": [
+				{
+					"name": "getComercial",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Devolver los datos del comercial cuyo id coincida"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/comercial/{{idComercial}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"comercial",
+								"{{idComercial}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getComercialByCliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Devolver la lista de los comerciales que han atendido pedidos del cliente que coincida con ese id."
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/comercial/byCliente/{{idCliente}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"comercial",
+								"byCliente",
+								"{{idCliente}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getComercialSinPedidos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Devolver la lista de comerciales que no  han atendido ningún  pedido"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/comercial/sinpedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"comercial",
+								"sinpedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "altaComercial",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Ignacio\",\r\n    \"apellido1\": \"Solís\",\r\n    \"apellido2\": \"Campos\",\r\n    \"comision\": 0.25\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/comercial/alta",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"comercial",
+								"alta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteComercial",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Eliminar de la bbdd el comercial cuyo id coincida, siempre y cuando no tenga pedidos a su cargo. Informar a la salida.\r",
+									"//Eliminado -> return 1 -> httpstatus: 200 Ok\r",
+									"//No Eliminado -> -1 o 0 -> httpstatus: 500 Internal Server Error\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/comercial/eliminar/{{idComercial}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"comercial",
+								"eliminar",
+								"{{idComercial}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedido",
+			"item": [
+				{
+					"name": "getPedidosByComercial",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Devolver la lista de pedidos gestionados por el comercial que coincida con ese id. Usar el PedidoDto como salida."
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/pedido/byComercial/{{idComercial}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"pedido",
+								"byComercial",
+								"{{idComercial}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTotalByComercial",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/*Obtener la suma de los importes de los pedidos gestionados por cada comercial.  \r",
+									"Obtener un Map<String,Double>, con el nombre y apellidos de cada comercial, y el importe total. \r",
+									"Busca cómo hacerlo con funciones de Stream.*/"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/pedido/totalByComercial",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"pedido",
+								"totalByComercial"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "idComercial",
+			"value": "1",
+			"type": "default"
+		},
+		{
+			"key": "idCliente",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
