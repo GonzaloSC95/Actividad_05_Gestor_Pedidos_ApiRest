@@ -24,6 +24,8 @@ import com.unir.pedidos.service.PedidoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -39,6 +41,7 @@ public class ComercialRestController {
 	@GetMapping("/{idComercial}")
 	@Operation(description = "Devolver los datos del comercial cuyo id coincida.")
 	@Parameter(name = "idComercial", description = "El id del comercial", required = true, schema = @Schema(type = "integer"))
+	@ApiResponse(responseCode = "200", description = "Datos del comercial.")
 	public ResponseEntity<ComercialDto> GetComercial(@PathVariable int idComercial) {
 		Comercial comercial = comercialService.GetComercial(idComercial);
 		if (comercial == null) {
@@ -51,6 +54,7 @@ public class ComercialRestController {
 	@GetMapping("/byCliente/{idCliente}")
 	@Operation(description = "Devolver la lista de los comerciales que han atendido pedidos del cliente que coincida con ese id.")
 	@Parameter(name = "idCliente", description = "El id del cliente", required = true, schema = @Schema(type = "integer"))
+	@ApiResponse(responseCode = "200", description = "Lista de comerciales que han atendido pedidos del cliente.")
 	public ResponseEntity<List<ComercialDto>> GetComercialByCliente(@PathVariable int idCliente) {
 		List<Comercial> comerciales = comercialService.GetComercialByCliente(idCliente);
 		if (comerciales.isEmpty()) {
@@ -65,6 +69,7 @@ public class ComercialRestController {
 	
 	@GetMapping("/sinpedidos")
 	@Operation(description = "Devolver la lista de comerciales que no  han atendido ningún  pedido.")
+	@ApiResponse(responseCode = "200", description = "Lista de comerciales que no han atendido ningún pedido.")
 	public ResponseEntity<List<ComercialDto>> GetComercialSinPedidos() {
 		List<Comercial> comerciales = comercialService.GetComercialSinPedidos();
 		if (comerciales.isEmpty()) {
@@ -79,6 +84,7 @@ public class ComercialRestController {
 	
 	@PostMapping("/alta")
 	@Operation(description = "Dar de alta un nuevo comercial.")
+	@ApiResponse(responseCode = "201", description = "Comercial dado de alta.")
 	public ResponseEntity<ComercialDto> AltaComercial(@RequestBody Comercial comercial) {
 		Comercial comercialAlta = comercialService.AltaComercial(comercial);
 		if (comercialAlta == null) {
@@ -91,6 +97,10 @@ public class ComercialRestController {
 	@DeleteMapping("/eliminar/{idComercial}")
 	@Operation(description = "Eliminar de la bbdd el comercial cuyo id coincida, siempre y cuando no tenga pedidos a su cargo. Informar a la salida.")
 	@Parameter(name = "idComercial", description = "El id del comercial", required = true, schema = @Schema(type = "integer"))
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Comercial eliminado."),
+			@ApiResponse(responseCode = "500", description = "Error interno.")
+	})
 	public ResponseEntity<Integer> EliminarComercial(@PathVariable int idComercial) {
 		List<Pedido> pedidos = pedidoService.GetPedidosByComercial(idComercial);
 		if (!pedidos.isEmpty()) {
