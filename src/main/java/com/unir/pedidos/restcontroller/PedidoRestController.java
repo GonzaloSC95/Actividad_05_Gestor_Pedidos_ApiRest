@@ -17,6 +17,8 @@ import com.unir.pedidos.dto.PedidoDto;
 import com.unir.pedidos.entity.Pedido;
 import com.unir.pedidos.service.PedidoService;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/pedido")
@@ -26,6 +28,8 @@ public class PedidoRestController {
 	private PedidoService pedidoService;
 	
 	@GetMapping("/byComercial/{idComercial}")
+	@Schema(description = "Devolver la lista de pedidos gestionados por el comercial "
+			+ "que coincida con ese id. Usar el PedidoDto como salida.")
 	public ResponseEntity<List<PedidoDto>> GetPedidosByComercial(@PathVariable int idComercial) {
 		List<Pedido> pedidos = pedidoService.GetPedidosByComercial(idComercial);
 		if (pedidos.isEmpty()) {
@@ -39,6 +43,8 @@ public class PedidoRestController {
 	}
 	
 	@GetMapping("/totalByComercial")
+	@Schema(description = "Obtener la suma de los importes de los pedidos gestionados por cada comercial.  "
+			+ "Obtener un Map<String,Double>, con el nombre y apellidos de cada comercial, y el importe total.")
 	public ResponseEntity<Map<String, Double>> GetTotalByComercial() {
 		Map<String, Double> mapTotal = pedidoService.GetTotalByComercial();
 		if (mapTotal == null) {

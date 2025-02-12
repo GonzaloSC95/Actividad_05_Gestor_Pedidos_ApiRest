@@ -3,6 +3,7 @@ package com.unir.pedidos.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,6 +29,7 @@ import lombok.NoArgsConstructor;
 //Anotaciones de JPA
 @Entity
 @Table(name="comerciales")
+@Schema(description = "Comerciales de la empresa")
 public class Comercial implements Serializable{
 	
 	// Atributos
@@ -37,14 +39,20 @@ public class Comercial implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	@Column(name = "id_comercial")
+	@Schema(description = "Identificador del comercial")
     private Integer idComercial;
 
+	@Schema(description = "Nombre del comercial")
     private String nombre;
+	@Schema(description = "Primer apellido del comercial")
     private String apellido1;
+	@Schema(description = "Segundo apellido del comercial")
     private String apellido2;
+	@Schema(description = "Comisión del comercial")
     private Double comision;
     
     @OneToMany(mappedBy = "comercial", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Schema(description = "Pedidos gestionados por el comercial")
     private List<Pedido> pedidos;
 
 }

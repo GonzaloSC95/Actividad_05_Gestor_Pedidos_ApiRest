@@ -1,5 +1,7 @@
 package com.unir.pedidos.dto;
 
+import java.io.Serializable;
+
 import org.modelmapper.ModelMapper;
 
 import com.unir.pedidos.entity.Comercial;
@@ -15,8 +17,11 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class ComercialDto {
+public class ComercialDto implements Serializable{
 	
+	//SerialVersionUID
+	private static final long serialVersionUID = 1L;
+
 	//ModelMapper
 	private static ModelMapper modelMapper;
 	

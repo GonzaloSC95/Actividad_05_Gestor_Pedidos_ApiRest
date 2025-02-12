@@ -1,5 +1,6 @@
 package com.unir.pedidos.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.modelmapper.ModelMapper;
@@ -16,7 +17,10 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class PedidoDto {
+public class PedidoDto implements Serializable{
+	
+	//SerialVersionUID
+	private static final long serialVersionUID = 1L;
 
 	//ModelMapper
 	private static ModelMapper modelMapper;

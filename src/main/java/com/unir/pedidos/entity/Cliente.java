@@ -5,6 +5,7 @@ package com.unir.pedidos.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,6 +31,7 @@ import lombok.NoArgsConstructor;
 //Anotaciones de JPA
 @Entity
 @Table(name="clientes")
+@Schema(description = "Clientes de la empresa")
 public class Cliente implements Serializable{
 	
 	//Atributos
@@ -39,15 +41,22 @@ public class Cliente implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	@Column(name="id_cliente")
+	@Schema(description = "Identificador del cliente")
     private Integer idCliente;
 
+	@Schema(description = "Nombre del cliente")
     private String nombre;
+	@Schema(description = "Primer apellido del cliente")
     private String apellido1;
+	@Schema(description = "Segundo apellido del cliente")
     private String apellido2;
+	@Schema(description = "Ciudad del cliente")
     private String ciudad;
+	@Schema(description = "Categoría del cliente")
     private Integer categoria;
     
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Schema(description = "Pedidos realizados por el cliente")
     private List<Pedido> pedidos;
 
 }

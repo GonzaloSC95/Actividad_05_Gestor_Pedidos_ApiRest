@@ -3,6 +3,7 @@ package com.unir.pedidos.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +31,7 @@ import lombok.NoArgsConstructor;
 //Anotaciones de JPA
 @Entity
 @Table(name="pedidos")
+@Schema(description = "Pedidos de los clientes")
 public class Pedido implements Serializable{
 
 	//Atributos
@@ -39,22 +41,28 @@ public class Pedido implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	@Column(name = "id_pedido")
+	@Schema(description = "Identificador del pedido")
 	private Integer idPedido;
 
+	@Schema(description = "Importe del pedido")
     private Double importe;
     
     @Temporal(TemporalType.DATE)
+    @Schema(description = "Fecha del pedido")
     private Date fecha;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
+    @Schema(description = "Cliente que realiza el pedido")
     private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "id_comercial", nullable = false)
+    @Schema(description = "Comercial que atiende el pedido")
     private Comercial comercial;
 
     //Metodos
+    @Schema(description = "Obtiene el nombre completo del cliente")
     public String GetNombreComercial(){
         return this.comercial.getNombre() + " " + this.comercial.getApellido1() + " " + this.comercial.getApellido2();
     }
