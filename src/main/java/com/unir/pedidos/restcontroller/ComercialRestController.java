@@ -21,6 +21,8 @@ import com.unir.pedidos.entity.Pedido;
 import com.unir.pedidos.service.ComercialService;
 import com.unir.pedidos.service.PedidoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @RestController
@@ -35,7 +37,8 @@ public class ComercialRestController {
 	private PedidoService pedidoService;
 	
 	@GetMapping("/{idComercial}")
-	@Schema(description = "Devolver los datos del comercial cuyo id coincida.")
+	@Operation(description = "Devolver los datos del comercial cuyo id coincida.")
+	@Parameter(name = "idComercial", description = "El id del comercial", required = true, schema = @Schema(type = "integer"))
 	public ResponseEntity<ComercialDto> GetComercial(@PathVariable int idComercial) {
 		Comercial comercial = comercialService.GetComercial(idComercial);
 		if (comercial == null) {
@@ -46,7 +49,8 @@ public class ComercialRestController {
 	}
 	
 	@GetMapping("/byCliente/{idCliente}")
-	@Schema(description = "Devolver la lista de los comerciales que han atendido pedidos del cliente que coincida con ese id.")
+	@Operation(description = "Devolver la lista de los comerciales que han atendido pedidos del cliente que coincida con ese id.")
+	@Parameter(name = "idCliente", description = "El id del cliente", required = true, schema = @Schema(type = "integer"))
 	public ResponseEntity<List<ComercialDto>> GetComercialByCliente(@PathVariable int idCliente) {
 		List<Comercial> comerciales = comercialService.GetComercialByCliente(idCliente);
 		if (comerciales.isEmpty()) {
@@ -60,7 +64,7 @@ public class ComercialRestController {
 	}
 	
 	@GetMapping("/sinpedidos")
-	@Schema(description = "Devolver la lista de comerciales que no  han atendido ningún  pedido.")
+	@Operation(description = "Devolver la lista de comerciales que no  han atendido ningún  pedido.")
 	public ResponseEntity<List<ComercialDto>> GetComercialSinPedidos() {
 		List<Comercial> comerciales = comercialService.GetComercialSinPedidos();
 		if (comerciales.isEmpty()) {
@@ -74,7 +78,7 @@ public class ComercialRestController {
 	}
 	
 	@PostMapping("/alta")
-	@Schema(description = "Dar de alta un nuevo comercial.")
+	@Operation(description = "Dar de alta un nuevo comercial.")
 	public ResponseEntity<ComercialDto> AltaComercial(@RequestBody Comercial comercial) {
 		Comercial comercialAlta = comercialService.AltaComercial(comercial);
 		if (comercialAlta == null) {
@@ -85,7 +89,8 @@ public class ComercialRestController {
 	}
 	
 	@DeleteMapping("/eliminar/{idComercial}")
-	@Schema(description = "Eliminar de la bbdd el comercial cuyo id coincida, siempre y cuando no tenga pedidos a su cargo. Informar a la salida.")
+	@Operation(description = "Eliminar de la bbdd el comercial cuyo id coincida, siempre y cuando no tenga pedidos a su cargo. Informar a la salida.")
+	@Parameter(name = "idComercial", description = "El id del comercial", required = true, schema = @Schema(type = "integer"))
 	public ResponseEntity<Integer> EliminarComercial(@PathVariable int idComercial) {
 		List<Pedido> pedidos = pedidoService.GetPedidosByComercial(idComercial);
 		if (!pedidos.isEmpty()) {
